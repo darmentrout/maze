@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { Consumer } from './Context';
 
-class Room extends Component {
-
+class Room extends Component { 
     render(){
-
         return (
             <Consumer>
                 { context => {
                     return (
                         <div>
-                            <p><strong>Room</strong></p>
-                            <p className="capitalize">Name: { context.currentRoom }</p>
+                            <h2>Room</h2>
+                            <p className="capitalize square-container">Name:&nbsp;
+                                <span className="square" style={{backgroundColor: context.currentRoom}}>&nbsp;</span>&nbsp;
+                                { context.currentRoom }
+                            </p>
+                            <p className="capitalize">Keys: { context.keysObtained.length }</p>
                             <p className="capitalize">Exits: { context.currentExits.join(', ') }</p>
-                            <p className="capitalize">Message: { context.message }</p>
+                            <p className="capitalize">Description: { context.message }</p>
                         </div>
                     )
                 } }

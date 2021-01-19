@@ -1,24 +1,44 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Provider } from './Components/Context';
-import Player from './Components/Player.js';
 import Travel from './Components/Travel.js';
 import House from './Components/House.js';
 import Room from './Components/Room.js';
 
+// find five items and then reach the exit
+
 class App extends Component {
 
   state = {
-    player: "",
     message: "Starting Point",
     dirName: "north",
     dirDegree: 0,
     currentRoom: "gray",
-    currentExits: ["south", "east"]
+    currentExits: ["south", "east"],
+    keyRooms: [],
+    keysObtained: [],
+    alert: ""
+  } 
+
+  componentDidMount(){
+    let tempKeyRooms = [];
+     while(tempKeyRooms.length < 3 ){
+      let randomIndex = Math.floor( Math.random() * House.length );
+      if( !tempKeyRooms.includes(House[randomIndex].name) && House[randomIndex].name !== 'gray' && House[randomIndex].name !== 'chartreuse' ){
+        tempKeyRooms.push( House[randomIndex].name );
+      }
+     }
+     this.setState({ keyRooms: tempKeyRooms });
   }
 
-  nameChange = (e) => {
-    this.setState({ player: e.target.value });
+  componentDidUpdate(prevProps, prevState){
+      if( prevState.currentRoom !== this.state.currentRoom ){
+        if( this.state.keyRooms.includes(this.state.currentRoom) && !this.state.keysObtained.includes(this.state.currentRoom) ){
+          this.setState(prevState => ({
+            keysObtained: [...prevState.keysObtained, this.state.currentRoom]
+          }));
+        }
+      }
   }
 
   dirChange = (dirHand) => {
@@ -108,7 +128,8 @@ class App extends Component {
                 this.setState({ 
                   currentRoom: val.exitRoom,
                   currentExits: this.exits(val.exitRoom),
-                  message: this.desc(val.exitRoom)
+                  message: this.desc(val.exitRoom),
+                  alert: ""
                 });
               }
             });
@@ -116,7 +137,7 @@ class App extends Component {
       });      
     }
     else{
-      this.setState({ message: 'cannot move ' + this.state.dirName });
+      this.setState({ alert: 'cannot move ' + this.state.dirName });
     }
   }
 
@@ -124,17 +145,16 @@ class App extends Component {
     return (
       <Provider value={this.state}>
         <div className="App">
+          <header className="background">
+            <h1>Maze</h1>
+            <p>Find three keys then reach the end of the maze!</p>
+          </header>
           <main className="background">
-            <h1>Game</h1>
             <div id="playArea">
               <div>
-                <Player nameChange={ this.nameChange }/>
                 <Travel dirChange={ this.dirChange } moveForward={ this.moveForward } />
               </div>
-              <Room 
-                exits={ this.state.currentExits } 
-                message={ this.state.message }              
-              />
+              <Room />
             </div>
           </main>
         </div>
