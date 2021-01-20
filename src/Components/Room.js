@@ -6,16 +6,22 @@ class Room extends Component {
         return (
             <Consumer>
                 { context => {
+
+                    let resetButton;
+                    if(context.keysObtained.length === 3 && context.currentRoom === 'chartreuse'){
+                        resetButton = <p><button onClick={ () => window.location = window.location.href}>Reset</button></p>;
+                    }
+
                     return (
                         <div>
                             <h2>Room</h2>
-                            <p className="capitalize square-container">Name:&nbsp;
-                                <span className="square" style={{backgroundColor: context.currentRoom}}>&nbsp;</span>&nbsp;
-                                { context.currentRoom }
+                            <p className="capitalize square-container"><strong>Name:</strong>&nbsp;
+                                <span className="square" style={{backgroundColor: context.currentRoom}}>&nbsp;</span>
+                                &nbsp;{ context.currentRoom }
                             </p>
-                            <p className="capitalize">Keys: { context.keysObtained.length }</p>
-                            <p className="capitalize">Exits: { context.currentExits.join(', ') }</p>
-                            <p className="capitalize">Description: { context.message }</p>
+                            <p className="capitalize"><strong>Exits:</strong> { context.currentExits.join(', ') }</p>
+                            <p className="capitalize"><strong>Description:</strong> { context.message }</p>
+                            { resetButton }
                         </div>
                     )
                 } }

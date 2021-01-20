@@ -26,19 +26,13 @@ class Travel extends Component {
                             roomDetail = " You found all the keys!"
                         }
                     }
+
                     return (
                         <div>
                             <h2>Navigation</h2>
-                            <p className="capitalize">You Are Facing: { context.dirName }</p>                            
-                            <p className="capitalize">Alert: { context.alert + roomDetail }</p>
-                            <div id="travelCtrl">
-                                <button onClick={ () => moveForward() }>Go Forward</button>
-                                <br />
-                                <button onClick={ () => dirChange('L') }>Turn Left</button>
-                                <button onClick={ () => dirChange('R') }>Turn Right</button>
-                                <br />
-                                <button onClick={ () => dirChange('B') }>Turn Backward</button>
-                            </div>
+                            <p className="capitalize"><strong>Facing:</strong> { context.dirName }</p>   
+                            <p className="capitalize"><strong>Keys:</strong> { context.keysObtained.length }</p>                         
+                            <p className="capitalize"><strong>Alert:</strong> { context.alert + roomDetail }</p>
                         </div>
                     )
                 } }

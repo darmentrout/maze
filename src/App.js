@@ -145,17 +145,23 @@ class App extends Component {
     return (
       <Provider value={this.state}>
         <div className="App">
-          <header className="background">
+          <header className="container">
             <h1>Maze</h1>
-            <p>Find three keys then reach the end of the maze!</p>
+            <p>Find three randomly placed keys then reach the end of the maze!</p>
           </header>
-          <main className="background">
-            <div id="playArea">
-              <div>
-                <Travel dirChange={ this.dirChange } moveForward={ this.moveForward } />
+          <main id="playArea" className="container">             
+              <div id="travelCtrl">
+                  <h2>Controls</h2>
+                  <br />
+                  <button onClick={ () => this.moveForward() } title="move forward">Go</button>
+                  <br />
+                  <button onClick={ () => this.dirChange('L') } title="turn left">←</button>
+                  <button onClick={ () => this.dirChange('R') } title="turn right">→</button>
+                  <br />
+                  <button onClick={ () => this.dirChange('B') } title="turn around">↻</button>
               </div>
+              <Travel dirChange={ this.dirChange } moveForward={ this.moveForward } /> 
               <Room />
-            </div>
           </main>
         </div>
       </Provider>
