@@ -4,11 +4,6 @@ import { Consumer } from './Context';
 class Travel extends Component {
 
     render(){
-        const {
-            dirChange,
-            moveForward
-        } = this.props;
-
         return (
             <Consumer>
                 { context => {
